@@ -1,3 +1,4 @@
+#!/home/bigdata/anaconda3/bin/python
 import json
 import sys
 import datetime
@@ -39,7 +40,13 @@ for line in sys.stdin:
                     time = datetime.datetime.fromtimestamp(int(item["taken_at_timestamp"]))
                     date = parseTime(socMedType, str(time))
                     print(socMedType, "\t", date, "\t", 1)
-                
+                if 'comments' in item:
+                    for komen in item['comments']['data']:
+                        socMedType = other[0]
+                        time = datetime.datetime.fromtimestamp(int(komen["created_at"]))
+                        date = parseTime(socMedType, str(time))
+                        print(socMedType, "\t", date, "\t", 1)
+            other.pop(0)
                     
         else:
             if "crawler_target" in data:
@@ -81,7 +88,6 @@ for line in sys.stdin:
                     date = parseTime(socMedType, time)
                     print(socMedType, "\t", date, "\t", 1)
                     # addCount(date, dict)
-        other.pop(0)
 
 # test = 0
 # for key in dict:
